@@ -1,0 +1,9 @@
+*.pdf
+*.txt
+*.tar.gz
+*.zip
+*.o
+.idea
+/cmake-build-debug/
+ann
+*.md5
