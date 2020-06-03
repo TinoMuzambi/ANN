@@ -15,4 +15,4 @@ clean:
 	@rm -f ./ann *.o
 
 run:
-	@./viterate
+	@./ann
