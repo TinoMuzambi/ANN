@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -41,10 +42,11 @@ int or_tron() {
 
     while(1)
     {
-        cout<<"x1"<<" "<<"x2"<<" "<<"b"<<" "<<"yi"<<" "<<
-            "yo"<<" "<<"t"<<" "<<"dw1"<<" "<<"dw2"<<" "<<"db"<<
-            " "<<"w1"<<" "<<"w2"<<" "<<"b"<<endl;
+//        cout<<"x1"<<" "<<"x2"<<" "<<"b"<<" "<<"yi"<<" "<<
+//            "yo"<<" "<<"t"<<" "<<"dw1"<<" "<<"dw2"<<" "<<"db"<<
+//            " "<<"w1"<<" "<<"w2"<<" "<<"b"<<endl;
 
+        vector<int> ans;
         for(i = 0; i < 4; i++)
         {
             // Calaulating Input
@@ -63,6 +65,7 @@ int or_tron() {
                 dw1 = 0;
                 dw2 = 0;
                 db = 0;
+                ans.push_back(yo);
             }
                 // Calaulating Change in Weight
             else
@@ -74,18 +77,21 @@ int or_tron() {
             w1 = w1 + dw1;
             w2 = w2 + dw2;
             b = b + db;
-            cout<<arr[i][0]<<" "<<arr[i][1]<<" "<<1<<" "<<yi<<" "<<yo
-                <<"     "<<t[i]<<" "<<dw1<<" "<<dw2<<" "<<db<<" "<<w1<<" "<<w2
-                <<" "<<b<<endl;
+//            cout<<arr[i][0]<<" "<<arr[i][1]<<" "<<1<<" "<<yi<<" "<<yo
+//                <<"     "<<t[i]<<" "<<dw1<<" "<<dw2<<" "<<db<<" "<<w1<<" "<<w2
+//                <<" "<<b<<endl;
         }
-        cout<<endl;
         if(count == 4)
         {
+            for (auto &&an : ans) {
+                cout << an << endl;
+            }
             return 0;
         }
         else
         {
             count = 0;
+            ans.clear();
         }
     }
 }
@@ -111,10 +117,11 @@ int and_tron() {
 
     while(1)
     {
-        cout<<"x1"<<" "<<"x2"<<" "<<"b"<<" "<<"yi"<<" "<<
-            "yo"<<" "<<"t"<<" "<<"dw1"<<" "<<"dw2"<<" "<<"db"<<
-            " "<<"w1"<<" "<<"w2"<<" "<<"b"<<endl;
+//        cout<<"x1"<<" "<<"x2"<<" "<<"b"<<" "<<"yi"<<" "<<
+//            "yo"<<" "<<"t"<<" "<<"dw1"<<" "<<"dw2"<<" "<<"db"<<
+//            " "<<"w1"<<" "<<"w2"<<" "<<"b"<<endl;
 
+        vector<int> ans;
         for(i = 0; i < 4; i++)
         {
             // Calaulating Input
@@ -129,6 +136,7 @@ int and_tron() {
             }
             if(t[i] == yo)
             {
+                ans.push_back(yo);
                 count++;
                 dw1 = 0;
                 dw2 = 0;
@@ -144,17 +152,21 @@ int and_tron() {
             w1 = w1 + dw1;
             w2 = w2 + dw2;
             b = b + db;
-            cout<<arr[i][0]<<" "<<arr[i][1]<<" "<<1<<" "<<yi<<" "<<yo
-                <<"     "<<t[i]<<" "<<dw1<<" "<<dw2<<" "<<db<<" "<<w1<<" "<<w2
-                <<" "<<b<<endl;
+//            cout<<arr[i][0]<<" "<<arr[i][1]<<" "<<1<<" "<<yi<<" "<<yo
+//                <<"     "<<t[i]<<" "<<dw1<<" "<<dw2<<" "<<db<<" "<<w1<<" "<<w2
+//                <<" "<<b<<endl;
         }
-        cout<<endl;
+//        cout<<endl;
         if(count == 4)
         {
+            for (auto &&an : ans) {
+                cout << an << endl;
+            }
             return 0;
         }
         else
         {
+            ans.clear();
             count = 0;
         }
     }
@@ -181,10 +193,11 @@ int nand_tron() {
 
     while(1)
     {
-        cout<<"x1"<<" "<<"x2"<<" "<<"b"<<" "<<"yi"<<" "<<
-            "yo"<<" "<<"t"<<" "<<"dw1"<<" "<<"dw2"<<" "<<"db"<<
-            " "<<"w1"<<" "<<"w2"<<" "<<"b"<<endl;
+//        cout<<"x1"<<" "<<"x2"<<" "<<"b"<<" "<<"yi"<<" "<<
+//            "yo"<<" "<<"t"<<" "<<"dw1"<<" "<<"dw2"<<" "<<"db"<<
+//            " "<<"w1"<<" "<<"w2"<<" "<<"b"<<endl;
 
+        vector<int> ans;
         for(i = 0; i < 4; i++)
         {
             // Calaulating Input
@@ -199,6 +212,7 @@ int nand_tron() {
             }
             if(t[i] == yo)
             {
+                ans.push_back(yo);
                 count++;
                 dw1 = 0;
                 dw2 = 0;
@@ -214,17 +228,21 @@ int nand_tron() {
             w1 = w1 + dw1;
             w2 = w2 + dw2;
             b = b + db;
-            cout<<arr[i][0]<<" "<<arr[i][1]<<" "<<1<<" "<<yi<<" "<<yo
-                <<"     "<<t[i]<<" "<<dw1<<" "<<dw2<<" "<<db<<" "<<w1<<" "<<w2
-                <<" "<<b<<endl;
+//            cout<<arr[i][0]<<" "<<arr[i][1]<<" "<<1<<" "<<yi<<" "<<yo
+//                <<"     "<<t[i]<<" "<<dw1<<" "<<dw2<<" "<<db<<" "<<w1<<" "<<w2
+//                <<" "<<b<<endl;
         }
-        cout<<endl;
+//        cout<<endl;
         if(count == 4)
         {
+            for (auto &&an : ans) {
+                cout << an << endl;
+            }
             return 0;
         }
         else
         {
+            ans.clear();
             count = 0;
         }
     }
