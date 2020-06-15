@@ -1,17 +1,30 @@
 #include <iostream>
 #include <vector>
+#include <random>
+#include <chrono>
 
 using namespace std;
 
+double get_weight() {
+    uniform_real_distribution<double> unif(0, 1);
+    default_random_engine re;
+    re.seed(std::chrono::system_clock::now().time_since_epoch().count());
+    return unif(re);
+}
+
+
 int or_tron(vector<vector<int>> inputs, vector<int> target) {
     double eta = 1;
-    int w1 = 0, w2 = 0, b = 0, count = 0, yi, neuron_out;
-    int delta_w1, delta_w2, delta_wb;
+    double w1 = get_weight();
+    double w2 = get_weight();
+    double bias = 0, count = 0, yi, neuron_out;
+    double delta_w1, delta_w2, delta_bias;
+    double error = 10;
 
-    while (true) {
+    while (error > 1e-8) {
         vector<int> ans;
         for (int i = 0; i < inputs.size(); i++) {
-            yi = inputs[i][0] * w1 + inputs[i][1] * w2 + b;
+            yi = inputs[i][0] * w1 + inputs[i][1] * w2 + bias;
             if (yi >= 0) {
                 neuron_out = 1;
             }
@@ -22,17 +35,18 @@ int or_tron(vector<vector<int>> inputs, vector<int> target) {
                 count++;
                 delta_w1 = 0;
                 delta_w2 = 0;
-                delta_wb = 0;
+                delta_bias = 0;
                 ans.push_back(neuron_out);
             }
             else {
                 delta_w1 = eta * (target[i] - neuron_out) * inputs[i][0];
                 delta_w2 = eta * (target[i] - neuron_out) * inputs[i][1];
-                delta_wb = eta * (target[i] - neuron_out);
+                delta_bias = eta * (target[i] - neuron_out);
             }
+            error = (w1 + delta_w1) - w1;
             w1 += delta_w1;
             w2 += delta_w2;
-            b += delta_wb;
+            bias += delta_bias;
         }
         if (count == inputs.size()) {
             for (auto &&an : ans) {
