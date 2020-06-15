@@ -3,34 +3,34 @@
 
 using namespace std;
 
-double weights[2] = {0.0, 0.0};
-
-double classify(double input) {
-    double products[2];
-    double curr_sum;
-    double threshold;
-    products[0] = input * weights[0];
-    products[1] = 1.0 * weights[1];
-    curr_sum = products[0] + products[1];
-    if (curr_sum >= 0) {
-        threshold = 1.0;
-    }
-    else {
-        threshold = -1.0;
-    }
-    return threshold;
-}
+//double weights[2] = {0.0, 0.0};
+//
+//double classify(double input) {
+//    double products[2];
+//    double curr_sum;
+//    double threshold;
+//    products[0] = input * weights[0];
+//    products[1] = 1.0 * weights[1];
+//    curr_sum = products[0] + products[1];
+//    if (curr_sum >= 0) {
+//        threshold = 1.0;
+//    }
+//    else {
+//        threshold = -1.0;
+//    }
+//    return threshold;
+//}
 
 int or_tron() {
     //Array for Binary Input
-    int arr[4][2] = { {0,0},
-                      {0,1},
-                      {1,0},
-                      {1,1}
+    vector<vector<int>> arr = { {0,0},
+                                 {0,1},
+                                 {1,0},
+                                 {1,1}
     };
 
     //Target array for Binary Input
-    int t[4] = {0,1,1,1};
+    vector<int> t = {0,1,1,1};
 
     // Considering learning rate=1
     int alp = 1;
@@ -47,9 +47,9 @@ int or_tron() {
 //            " "<<"w1"<<" "<<"w2"<<" "<<"b"<<endl;
 
         vector<int> ans;
-        for(i = 0; i < 4; i++)
+        for(i = 0; i < arr.size(); i++)
         {
-            // Calaulating Input
+            // Calculating Input
             yi = arr[i][0] * w1 + arr[i][1] * w2 + b;
             if(yi >= 0)
             {
@@ -67,7 +67,7 @@ int or_tron() {
                 db = 0;
                 ans.push_back(yo);
             }
-                // Calaulating Change in Weight
+                // Calculating Change in Weight
             else
             {
                 dw1 = alp*(t[i] - yo) * arr[i][0];
@@ -105,7 +105,7 @@ int and_tron() {
     };
 
     //Target array for Binary Input
-    int t[4] = {0,0,0,1};
+    vector<int> t = {0,0,0,1};
 
     // Considering learning rate=1
     int alp = 1;
@@ -124,7 +124,7 @@ int and_tron() {
         vector<int> ans;
         for(i = 0; i < 4; i++)
         {
-            // Calaulating Input
+            // Calculating Input
             yi = arr[i][0] * w1 + arr[i][1] * w2 + b;
             if(yi >= 0)
             {
@@ -142,7 +142,7 @@ int and_tron() {
                 dw2 = 0;
                 db = 0;
             }
-                // Calaulating Change in Weight
+                // Calculating Change in Weight
             else
             {
                 dw1 = alp*(t[i] - yo) * arr[i][0];
@@ -181,7 +181,7 @@ int nand_tron() {
     };
 
     //Target array for Binary Input
-    int t[4] = {1,1,1,0};
+    vector<int> t = {1,1,1,0};
 
     // Considering learning rate=1
     int alp = 1;
@@ -200,7 +200,7 @@ int nand_tron() {
         vector<int> ans;
         for(i = 0; i < 4; i++)
         {
-            // Calaulating Input
+            // Calculating Input
             yi = arr[i][0] * w1 + arr[i][1] * w2 + b;
             if(yi >= 0)
             {
@@ -218,7 +218,7 @@ int nand_tron() {
                 dw2 = 0;
                 db = 0;
             }
-                // Calaulating Change in Weight
+                // Calculating Change in Weight
             else
             {
                 dw1 = alp*(t[i] - yo) * arr[i][0];
