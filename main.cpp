@@ -3,27 +3,9 @@
 
 using namespace std;
 
-//double weights[2] = {0.0, 0.0};
-//
-//double classify(double input) {
-//    double products[2];
-//    double curr_sum;
-//    double threshold;
-//    products[0] = input * weights[0];
-//    products[1] = 1.0 * weights[1];
-//    curr_sum = products[0] + products[1];
-//    if (curr_sum >= 0) {
-//        threshold = 1.0;
-//    }
-//    else {
-//        threshold = -1.0;
-//    }
-//    return threshold;
-//}
-
-int or_tron(vector<vector<int>> arr) {
+int or_tron(vector<vector<int>> inputs) {
     //Target array for Binary Input
-    vector<int> t = {0,1,1,1};
+    vector<int> t = {0, 1, 1, 1};
 
     // Considering learning rate=1
     int alp = 1;
@@ -31,29 +13,20 @@ int or_tron(vector<vector<int>> arr) {
     // yi = input
     // yo = output
     int w1 = 0, w2 = 0, b = 0, count = 0, i, yi, yo;
-    int dw1,dw2,db;
+    int dw1, dw2, db;
 
-    while(1)
-    {
-//        cout<<"x1"<<" "<<"x2"<<" "<<"b"<<" "<<"yi"<<" "<<
-//            "yo"<<" "<<"t"<<" "<<"dw1"<<" "<<"dw2"<<" "<<"db"<<
-//            " "<<"w1"<<" "<<"w2"<<" "<<"b"<<endl;
-
+    while(true) {
         vector<int> ans;
-        for(i = 0; i < arr.size(); i++)
-        {
+        for (int j = 0; j < inputs.size(); j++) {
             // Calculating Input
-            yi = arr[i][0] * w1 + arr[i][1] * w2 + b;
-            if(yi >= 0)
-            {
+            yi = inputs[j][0] * w1 + inputs[j][1] * w2 + b;
+            if(yi >= 0) {
                 yo = 1;
             }
-            else
-            {
+            else {
                 yo = 0;
             }
-            if(t[i] == yo)
-            {
+            if(t[j] == yo) {
                 count++;
                 dw1 = 0;
                 dw2 = 0;
@@ -61,28 +34,22 @@ int or_tron(vector<vector<int>> arr) {
                 ans.push_back(yo);
             }
                 // Calculating Change in Weight
-            else
-            {
-                dw1 = alp*(t[i] - yo) * arr[i][0];
-                dw2 = alp*(t[i] - yo) * arr[i][1];
-                db = alp*(t[i] - yo);
+            else {
+                dw1 = alp * (t[j] - yo) * inputs[j][0];
+                dw2 = alp * (t[j] - yo) * inputs[j][1];
+                db = alp*(t[j] - yo);
             }
             w1 = w1 + dw1;
             w2 = w2 + dw2;
             b = b + db;
-//            cout<<arr[i][0]<<" "<<arr[i][1]<<" "<<1<<" "<<yi<<" "<<yo
-//                <<"     "<<t[i]<<" "<<dw1<<" "<<dw2<<" "<<db<<" "<<w1<<" "<<w2
-//                <<" "<<b<<endl;
         }
-        if(count == arr.size())
-        {
+        if (count == arr.size()) {
             for (auto &&an : ans) {
                 cout << an << endl;
             }
             return 0;
         }
-        else
-        {
+        else {
             count = 0;
             ans.clear();
         }
@@ -99,29 +66,20 @@ int and_tron(vector<vector<int>> arr) {
     // yi = input
     // yo = output
     int w1 = 0, w2 = 0, b = 0, count = 0, i, yi, yo;
-    int dw1,dw2,db;
+    int dw1, dw2, db;
 
-    while(1)
-    {
-//        cout<<"x1"<<" "<<"x2"<<" "<<"b"<<" "<<"yi"<<" "<<
-//            "yo"<<" "<<"t"<<" "<<"dw1"<<" "<<"dw2"<<" "<<"db"<<
-//            " "<<"w1"<<" "<<"w2"<<" "<<"b"<<endl;
-
+    while(true) {
         vector<int> ans;
-        for(i = 0; i < arr.size(); i++)
-        {
+        for(i = 0; i < arr.size(); i++) {
             // Calculating Input
             yi = arr[i][0] * w1 + arr[i][1] * w2 + b;
-            if(yi >= 0)
-            {
+            if (yi >= 0) {
                 yo = 1;
             }
-            else
-            {
+            else {
                 yo = 0;
             }
-            if(t[i] == yo)
-            {
+            if(t[i] == yo) {
                 ans.push_back(yo);
                 count++;
                 dw1 = 0;
@@ -129,8 +87,7 @@ int and_tron(vector<vector<int>> arr) {
                 db = 0;
             }
                 // Calculating Change in Weight
-            else
-            {
+            else {
                 dw1 = alp*(t[i] - yo) * arr[i][0];
                 dw2 = alp*(t[i] - yo) * arr[i][1];
                 db = alp*(t[i] - yo);
@@ -138,20 +95,15 @@ int and_tron(vector<vector<int>> arr) {
             w1 = w1 + dw1;
             w2 = w2 + dw2;
             b = b + db;
-//            cout<<arr[i][0]<<" "<<arr[i][1]<<" "<<1<<" "<<yi<<" "<<yo
-//                <<"     "<<t[i]<<" "<<dw1<<" "<<dw2<<" "<<db<<" "<<w1<<" "<<w2
-//                <<" "<<b<<endl;
         }
-//        cout<<endl;
-        if(count == arr.size())
-        {
+
+        if (count == arr.size()) {
             for (auto &&an : ans) {
                 cout << an << endl;
             }
             return 0;
         }
-        else
-        {
+        else {
             ans.clear();
             count = 0;
         }
@@ -170,27 +122,18 @@ int nand_tron(vector<vector<int>> arr) {
     int w1 = 0, w2 = 0, b = 0, count = 0, i, yi, yo;
     int dw1,dw2,db;
 
-    while(1)
-    {
-//        cout<<"x1"<<" "<<"x2"<<" "<<"b"<<" "<<"yi"<<" "<<
-//            "yo"<<" "<<"t"<<" "<<"dw1"<<" "<<"dw2"<<" "<<"db"<<
-//            " "<<"w1"<<" "<<"w2"<<" "<<"b"<<endl;
-
+    while(true) {
         vector<int> ans;
-        for(i = 0; i < arr.size(); i++)
-        {
+        for(i = 0; i < arr.size(); i++) {
             // Calculating Input
             yi = arr[i][0] * w1 + arr[i][1] * w2 + b;
-            if(yi >= 0)
-            {
+            if(yi >= 0) {
                 yo = 1;
             }
-            else
-            {
+            else {
                 yo = 0;
             }
-            if(t[i] == yo)
-            {
+            if(t[i] == yo) {
                 ans.push_back(yo);
                 count++;
                 dw1 = 0;
@@ -198,8 +141,7 @@ int nand_tron(vector<vector<int>> arr) {
                 db = 0;
             }
                 // Calculating Change in Weight
-            else
-            {
+            else {
                 dw1 = alp*(t[i] - yo) * arr[i][0];
                 dw2 = alp*(t[i] - yo) * arr[i][1];
                 db = alp*(t[i] - yo);
@@ -207,20 +149,15 @@ int nand_tron(vector<vector<int>> arr) {
             w1 = w1 + dw1;
             w2 = w2 + dw2;
             b = b + db;
-//            cout<<arr[i][0]<<" "<<arr[i][1]<<" "<<1<<" "<<yi<<" "<<yo
-//                <<"     "<<t[i]<<" "<<dw1<<" "<<dw2<<" "<<db<<" "<<w1<<" "<<w2
-//                <<" "<<b<<endl;
         }
-//        cout<<endl;
-        if(count == arr.size())
-        {
+
+        if (count == arr.size()) {
             for (auto &&an : ans) {
                 cout << an << endl;
             }
             return 0;
         }
-        else
-        {
+        else {
             ans.clear();
             count = 0;
         }
@@ -228,48 +165,24 @@ int nand_tron(vector<vector<int>> arr) {
 }
 
 int main() {
-    vector<vector<int>> arr = { {0,0},
-                                {0,1},
-                                {1,0},
-                                {1,1}
+    vector<vector<int>> inputs = {{0, 0},
+                                  {0, 1},
+                                  {1, 0},
+                                  {1, 1}
     };
     // AND OR NAND
 
     // OR PERCEPTRON
     cout << "OR" << endl;
-    or_tron(arr);
+    or_tron(inputs);
 
     // AND PERCEPTRON
     cout << "AND" << endl;
-    and_tron(arr);
+    and_tron(inputs);
 
     // NAND PERCEPTRON
     cout << "NAND" << endl;
-    nand_tron(arr);
+    nand_tron(inputs);
 
-//    double inputs[2] = {1.0, 2.0};
-//    double outputs[2] = {1.0, -1.0};
-//
-//    bool trained = false;
-//    while (!trained) {
-//        trained = true;
-//        // Output the current training state.
-//        cout << inputs[0] << " , " << outputs[0] << " Eval = " << classify(inputs[0]) << endl;
-//        cout << inputs[1] << " , " << outputs[1] << " Eval = " << classify(inputs[1]) << endl;
-//        cout << "Weights = " << weights[0] << " , " << weights[1] << endl << endl;
-//        int index = 0;
-//        // Run through the data and update for misclassifications
-//        while (index < 2) {
-//            double input = inputs[index];
-//            double output = outputs[index];
-//            double curr_class = classify(input);
-//            if (curr_class != output) {
-//                weights[0] = weights[0] + output * input;
-//                weights[1] = weights[1] + output * 1.0;
-//                trained = false;
-//            }
-//            ++index;
-//        }
-//    }
     return 0;
 }
