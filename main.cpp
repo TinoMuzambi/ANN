@@ -21,14 +21,7 @@ using namespace std;
 //    return threshold;
 //}
 
-int or_tron() {
-    //Array for Binary Input
-    vector<vector<int>> arr = { {0,0},
-                                 {0,1},
-                                 {1,0},
-                                 {1,1}
-    };
-
+int or_tron(vector<vector<int>> arr) {
     //Target array for Binary Input
     vector<int> t = {0,1,1,1};
 
@@ -97,8 +90,6 @@ int or_tron() {
 }
 
 int and_tron(vector<vector<int>> arr) {
-    //Array for Binary Input
-
     //Target array for Binary Input
     vector<int> t = {0,0,0,1};
 
@@ -167,14 +158,7 @@ int and_tron(vector<vector<int>> arr) {
     }
 }
 
-int nand_tron() {
-    //Array for Binary Input
-    vector<vector<int>> arr = { {0,0},
-                      {0,1},
-                      {1,0},
-                      {1,1}
-    };
-
+int nand_tron(vector<vector<int>> arr) {
     //Target array for Binary Input
     vector<int> t = {1,1,1,0};
 
@@ -253,7 +237,7 @@ int main() {
 
     // OR PERCEPTRON
     cout << "OR" << endl;
-    or_tron();
+    or_tron(arr);
 
     // AND PERCEPTRON
     cout << "AND" << endl;
@@ -261,7 +245,7 @@ int main() {
 
     // NAND PERCEPTRON
     cout << "NAND" << endl;
-    nand_tron();
+    nand_tron(arr);
 
 //    double inputs[2] = {1.0, 2.0};
 //    double outputs[2] = {1.0, -1.0};
