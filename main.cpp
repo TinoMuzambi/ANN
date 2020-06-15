@@ -81,7 +81,7 @@ int or_tron() {
 //                <<"     "<<t[i]<<" "<<dw1<<" "<<dw2<<" "<<db<<" "<<w1<<" "<<w2
 //                <<" "<<b<<endl;
         }
-        if(count == 4)
+        if(count == arr.size())
         {
             for (auto &&an : ans) {
                 cout << an << endl;
@@ -96,13 +96,8 @@ int or_tron() {
     }
 }
 
-int and_tron() {
+int and_tron(vector<vector<int>> arr) {
     //Array for Binary Input
-    int arr[4][2] = { {0,0},
-                      {0,1},
-                      {1,0},
-                      {1,1}
-    };
 
     //Target array for Binary Input
     vector<int> t = {0,0,0,1};
@@ -122,7 +117,7 @@ int and_tron() {
 //            " "<<"w1"<<" "<<"w2"<<" "<<"b"<<endl;
 
         vector<int> ans;
-        for(i = 0; i < 4; i++)
+        for(i = 0; i < arr.size(); i++)
         {
             // Calculating Input
             yi = arr[i][0] * w1 + arr[i][1] * w2 + b;
@@ -157,7 +152,7 @@ int and_tron() {
 //                <<" "<<b<<endl;
         }
 //        cout<<endl;
-        if(count == 4)
+        if(count == arr.size())
         {
             for (auto &&an : ans) {
                 cout << an << endl;
@@ -174,7 +169,7 @@ int and_tron() {
 
 int nand_tron() {
     //Array for Binary Input
-    int arr[4][2] = { {0,0},
+    vector<vector<int>> arr = { {0,0},
                       {0,1},
                       {1,0},
                       {1,1}
@@ -198,7 +193,7 @@ int nand_tron() {
 //            " "<<"w1"<<" "<<"w2"<<" "<<"b"<<endl;
 
         vector<int> ans;
-        for(i = 0; i < 4; i++)
+        for(i = 0; i < arr.size(); i++)
         {
             // Calculating Input
             yi = arr[i][0] * w1 + arr[i][1] * w2 + b;
@@ -233,7 +228,7 @@ int nand_tron() {
 //                <<" "<<b<<endl;
         }
 //        cout<<endl;
-        if(count == 4)
+        if(count == arr.size())
         {
             for (auto &&an : ans) {
                 cout << an << endl;
@@ -249,6 +244,11 @@ int nand_tron() {
 }
 
 int main() {
+    vector<vector<int>> arr = { {0,0},
+                                {0,1},
+                                {1,0},
+                                {1,1}
+    };
     // AND OR NAND
 
     // OR PERCEPTRON
@@ -257,7 +257,7 @@ int main() {
 
     // AND PERCEPTRON
     cout << "AND" << endl;
-    and_tron();
+    and_tron(arr);
 
     // NAND PERCEPTRON
     cout << "NAND" << endl;
