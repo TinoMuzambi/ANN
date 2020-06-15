@@ -3,163 +3,46 @@
 
 using namespace std;
 
-int or_tron(vector<vector<int>> inputs) {
-    //Target array for Binary Input
-    vector<int> t = {0, 1, 1, 1};
+int or_tron(vector<vector<int>> inputs, vector<int> target) {
+    double eta = 1;
+    int w1 = 0, w2 = 0, b = 0, count = 0, yi, neuron_out;
+    int delta_w1, delta_w2, delta_wb;
 
-    // Considering learning rate=1
-    int alp = 1;
-
-    // yi = input
-    // yo = output
-    int w1 = 0, w2 = 0, b = 0, count = 0, i, yi, yo;
-    int dw1, dw2, db;
-
-    while(true) {
+    while (true) {
         vector<int> ans;
-        for (int j = 0; j < inputs.size(); j++) {
-            // Calculating Input
-            yi = inputs[j][0] * w1 + inputs[j][1] * w2 + b;
-            if(yi >= 0) {
-                yo = 1;
-            }
-            else {
-                yo = 0;
-            }
-            if(t[j] == yo) {
-                count++;
-                dw1 = 0;
-                dw2 = 0;
-                db = 0;
-                ans.push_back(yo);
-            }
-                // Calculating Change in Weight
-            else {
-                dw1 = alp * (t[j] - yo) * inputs[j][0];
-                dw2 = alp * (t[j] - yo) * inputs[j][1];
-                db = alp*(t[j] - yo);
-            }
-            w1 = w1 + dw1;
-            w2 = w2 + dw2;
-            b = b + db;
-        }
-        if (count == arr.size()) {
-            for (auto &&an : ans) {
-                cout << an << endl;
-            }
-            return 0;
-        }
-        else {
-            count = 0;
-            ans.clear();
-        }
-    }
-}
-
-int and_tron(vector<vector<int>> arr) {
-    //Target array for Binary Input
-    vector<int> t = {0,0,0,1};
-
-    // Considering learning rate=1
-    int alp = 1;
-
-    // yi = input
-    // yo = output
-    int w1 = 0, w2 = 0, b = 0, count = 0, i, yi, yo;
-    int dw1, dw2, db;
-
-    while(true) {
-        vector<int> ans;
-        for(i = 0; i < arr.size(); i++) {
-            // Calculating Input
-            yi = arr[i][0] * w1 + arr[i][1] * w2 + b;
+        for (int i = 0; i < inputs.size(); i++) {
+            yi = inputs[i][0] * w1 + inputs[i][1] * w2 + b;
             if (yi >= 0) {
-                yo = 1;
+                neuron_out = 1;
             }
             else {
-                yo = 0;
+                neuron_out = 0;
             }
-            if(t[i] == yo) {
-                ans.push_back(yo);
+            if (target[i] == neuron_out) {
                 count++;
-                dw1 = 0;
-                dw2 = 0;
-                db = 0;
+                delta_w1 = 0;
+                delta_w2 = 0;
+                delta_wb = 0;
+                ans.push_back(neuron_out);
             }
-                // Calculating Change in Weight
             else {
-                dw1 = alp*(t[i] - yo) * arr[i][0];
-                dw2 = alp*(t[i] - yo) * arr[i][1];
-                db = alp*(t[i] - yo);
+                delta_w1 = eta * (target[i] - neuron_out) * inputs[i][0];
+                delta_w2 = eta * (target[i] - neuron_out) * inputs[i][1];
+                delta_wb = eta * (target[i] - neuron_out);
             }
-            w1 = w1 + dw1;
-            w2 = w2 + dw2;
-            b = b + db;
+            w1 += delta_w1;
+            w2 += delta_w2;
+            b += delta_wb;
         }
-
-        if (count == arr.size()) {
+        if (count == inputs.size()) {
             for (auto &&an : ans) {
                 cout << an << endl;
             }
             return 0;
         }
         else {
-            ans.clear();
             count = 0;
-        }
-    }
-}
-
-int nand_tron(vector<vector<int>> arr) {
-    //Target array for Binary Input
-    vector<int> t = {1,1,1,0};
-
-    // Considering learning rate=1
-    int alp = 1;
-
-    // yi = input
-    // yo = output
-    int w1 = 0, w2 = 0, b = 0, count = 0, i, yi, yo;
-    int dw1,dw2,db;
-
-    while(true) {
-        vector<int> ans;
-        for(i = 0; i < arr.size(); i++) {
-            // Calculating Input
-            yi = arr[i][0] * w1 + arr[i][1] * w2 + b;
-            if(yi >= 0) {
-                yo = 1;
-            }
-            else {
-                yo = 0;
-            }
-            if(t[i] == yo) {
-                ans.push_back(yo);
-                count++;
-                dw1 = 0;
-                dw2 = 0;
-                db = 0;
-            }
-                // Calculating Change in Weight
-            else {
-                dw1 = alp*(t[i] - yo) * arr[i][0];
-                dw2 = alp*(t[i] - yo) * arr[i][1];
-                db = alp*(t[i] - yo);
-            }
-            w1 = w1 + dw1;
-            w2 = w2 + dw2;
-            b = b + db;
-        }
-
-        if (count == arr.size()) {
-            for (auto &&an : ans) {
-                cout << an << endl;
-            }
-            return 0;
-        }
-        else {
             ans.clear();
-            count = 0;
         }
     }
 }
@@ -170,19 +53,21 @@ int main() {
                                   {1, 0},
                                   {1, 1}
     };
-    // AND OR NAND
 
     // OR PERCEPTRON
     cout << "OR" << endl;
-    or_tron(inputs);
+    vector<int> target = {0, 1, 1, 1};
+    or_tron(inputs, target);
 
     // AND PERCEPTRON
     cout << "AND" << endl;
-    and_tron(inputs);
+    target = {0, 0, 0, 1};
+    or_tron(inputs, target);
 
     // NAND PERCEPTRON
     cout << "NAND" << endl;
-    nand_tron(inputs);
+    target = {1, 1, 1, 0};
+    or_tron(inputs, target);
 
     return 0;
 }
