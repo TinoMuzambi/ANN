@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 using namespace std;
-double get_weight() {
+double get_rand_weight() {
     uniform_real_distribution<double> unif(0, 1);
     default_random_engine re;
     re.seed(chrono::system_clock::now().time_since_epoch().count());
@@ -13,8 +13,8 @@ double get_weight() {
 }
 
 struct VectorHasher {
-    int operator()(const vector<int> &V) const {
-        int hash=0;
+    double operator()(const vector<double> &V) const {
+        double hash = 0.0;
         for (int i : V) {
             hash += i;
         }
@@ -22,37 +22,40 @@ struct VectorHasher {
     }
 };
 
-int perceptron(vector<vector<int>> inputs, unordered_map<vector<int>, int, VectorHasher> target) {
-    int eta = 1;
-    int w1 = 0, w2 = 0, bias = 0; 
-    int count = 0, i, yi, yo;
-    int delta_w1, delta_w2, delta_bias;
+double perceptron(vector<vector<double>> inputs, unordered_map<vector<double>, double, VectorHasher> target) {
+    double eta = 0.6;   // Learning rate.
+    double w1 = get_rand_weight();   // Initialising weights randomly.
+    double w2 = get_rand_weight();
+    double bias = 0.0;      // Bias term.
+    int count = 0;
+    double linear_sum, p_output;
+    double delta_w1, delta_w2, delta_bias;
 
     while (true) {
         vector<int> ans;
         for (auto & input : inputs) {
-            yi = input[0] * w1 + input[1] * w2 + bias;
-            if (yi >= 0) {
-                yo = 1;
+            linear_sum = input[0] * w1 + input[1] * w2 + bias;
+            if (linear_sum >= 0) { // Threshold activation function.
+                p_output = 1.0;
             }
             else {
-                yo = 0;
+                p_output = 0.0;
             }
-            if (target[input] == yo) {
+            if (target[input] == p_output) {    // Check if output is equivalent to target.
                 count++;
-                delta_w1 = 0;
-                delta_w2 = 0;
-                delta_bias = 0;
-                ans.push_back(yo);
+                delta_w1 = 0.0;
+                delta_w2 = 0.0;
+                delta_bias = 0.0;
+                ans.push_back(p_output);
             }
-            else {
-                delta_w1 = eta * (target[input] - yo) * input[0];
-                delta_w2 = eta * (target[input] - yo) * input[1];
-                delta_bias = eta * (target[input] - yo);
+            else {  // If not, apply learning rule.
+                delta_w1 = eta * (target[input] - p_output) * input[0];
+                delta_w2 = eta * (target[input] - p_output) * input[1];
+                delta_bias = eta * (target[input] - p_output);
             }
-            w1 = w1 + delta_w1;
-            w2 = w2 + delta_w2;
-            bias = bias + delta_bias;
+            w1 += delta_w1; // Computing new weights.
+            w2 += delta_w2;
+            bias += delta_bias;
         }
         if (count == inputs.size()) {
             for (auto &&an : ans) {
@@ -68,18 +71,18 @@ int perceptron(vector<vector<int>> inputs, unordered_map<vector<int>, int, Vecto
 }
 
 int main() {
-    vector<vector<int>> inputs = {
-                                  {0, 0}
+    vector<vector<double>> inputs = {
+                                  {0, 0},
     };
 
     // OR PERCEPTRON
     cout << "OR" << endl;
-    unordered_map<vector<int>, int, VectorHasher> target;
+    unordered_map<vector<double>, double, VectorHasher> target;
     target[{0, 0}] = 0;
     target[{0, 1}] = 1;
     target[{1, 0}] = 1;
     target[{1, 1}] = 1;
-    int or_out = perceptron(inputs, target);
+    double or_out = perceptron(inputs, target);
 
     // NAND PERCEPTRON
     cout << "NAND" << endl;
@@ -87,7 +90,7 @@ int main() {
     target[{0, 1}] = 1;
     target[{1, 0}] = 1;
     target[{1, 1}] = 0;
-    int nand_out = perceptron(inputs, target);
+    double nand_out = perceptron(inputs, target);
 
     // AND PERCEPTRON
     cout << "XOR" << endl;
@@ -95,17 +98,8 @@ int main() {
     target[{0, 1}] = 0;
     target[{1, 0}] = 0;
     target[{1, 1}] = 1;
-    vector<vector<int>> xor_inputs = {{nand_out, or_out}};
+    vector<vector<double>> xor_inputs = {{nand_out, or_out}};
     perceptron(xor_inputs, target);
-
-    // XOR PERCEPTRON;
-//    cout << "XOR" << endl;
-//    target[{0, 0}] = 0;
-//    target[{0, 1}] = 1;
-//    target[{1, 0}] = 1;
-//    target[{1, 1}] = 0;
-//    vector<vector<int>> xor_inputs = {{nand_out, or_out}};
-//    perceptron(xor_inputs, target);
 
     return 0;
 }
