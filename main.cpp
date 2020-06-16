@@ -22,43 +22,43 @@ struct VectorHasher {
     }
 };
 
-int or_tron(vector<vector<int>> inputs, unordered_map<vector<int>, int, VectorHasher> target) {
-    int alp = 1;
-
-    int w1 = 0, w2 = 0, b = 0, count = 0, i, yi, yo;
-    int dw1, dw2, db;
+int perceptron(vector<vector<int>> inputs, unordered_map<vector<int>, int, VectorHasher> target) {
+    int eta = 1;
+    int w1 = 0, w2 = 0, bias = 0; 
+    int count = 0, i, yi, yo;
+    int delta_w1, delta_w2, delta_bias;
 
     while (true) {
         vector<int> ans;
-        for (int j = 0; j < inputs.size(); j++) {
-            yi = inputs[j][0] * w1 + inputs[j][1] * w2 + b;
+        for (auto & input : inputs) {
+            yi = input[0] * w1 + input[1] * w2 + bias;
             if (yi >= 0) {
                 yo = 1;
             }
             else {
                 yo = 0;
             }
-            if (target[inputs[j]] == yo) {
+            if (target[input] == yo) {
                 count++;
-                dw1 = 0;
-                dw2 = 0;
-                db = 0;
+                delta_w1 = 0;
+                delta_w2 = 0;
+                delta_bias = 0;
                 ans.push_back(yo);
             }
             else {
-                dw1 = alp * (target[inputs[j]] - yo) * inputs[j][0];
-                dw2 = alp * (target[inputs[j]] - yo) * inputs[j][1];
-                db = alp*(target[inputs[j]] - yo);
+                delta_w1 = eta * (target[input] - yo) * input[0];
+                delta_w2 = eta * (target[input] - yo) * input[1];
+                delta_bias = eta * (target[input] - yo);
             }
-            w1 = w1 + dw1;
-            w2 = w2 + dw2;
-            b = b + db;
+            w1 = w1 + delta_w1;
+            w2 = w2 + delta_w2;
+            bias = bias + delta_bias;
         }
         if (count == inputs.size()) {
             for (auto &&an : ans) {
                 cout << an << endl;
             }
-            return 0;
+            return ans[0];
         }
         else {
             count = 0;
@@ -68,10 +68,8 @@ int or_tron(vector<vector<int>> inputs, unordered_map<vector<int>, int, VectorHa
 }
 
 int main() {
-    vector<vector<int>> inputs = {{0, 0},
-                                  {0, 1},
-                                  {1, 0},
-                                  {1, 1}
+    vector<vector<int>> inputs = {
+                                  {0, 0}
     };
 
     // OR PERCEPTRON
@@ -81,23 +79,33 @@ int main() {
     target[{0, 1}] = 1;
     target[{1, 0}] = 1;
     target[{1, 1}] = 1;
-    or_tron(inputs, target);
-
-    // AND PERCEPTRON
-    cout << "AND" << endl;
-    target[{0, 0}] = 0;
-    target[{0, 1}] = 0;
-    target[{1, 0}] = 0;
-    target[{1, 1}] = 1;
-    or_tron(inputs, target);
+    int or_out = perceptron(inputs, target);
 
     // NAND PERCEPTRON
     cout << "NAND" << endl;
     target[{0, 0}] = 1;
+    target[{0, 1}] = 1;
+    target[{1, 0}] = 1;
+    target[{1, 1}] = 0;
+    int nand_out = perceptron(inputs, target);
+
+    // AND PERCEPTRON
+    cout << "XOR" << endl;
+    target[{0, 0}] = 0;
     target[{0, 1}] = 0;
     target[{1, 0}] = 0;
-    target[{1, 1}] = 0;
-    or_tron(inputs, target);
+    target[{1, 1}] = 1;
+    vector<vector<int>> xor_inputs = {{nand_out, or_out}};
+    perceptron(xor_inputs, target);
+
+    // XOR PERCEPTRON;
+//    cout << "XOR" << endl;
+//    target[{0, 0}] = 0;
+//    target[{0, 1}] = 1;
+//    target[{1, 0}] = 1;
+//    target[{1, 1}] = 0;
+//    vector<vector<int>> xor_inputs = {{nand_out, or_out}};
+//    perceptron(xor_inputs, target);
 
     return 0;
 }
