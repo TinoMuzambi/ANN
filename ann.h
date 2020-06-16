@@ -3,10 +3,35 @@
 #ifndef ASSIGNMENT_7_ANN_H
 #define ASSIGNMENT_7_ANN_H
 
+#include <iostream>
+#include <vector>
+#include <random>
+#include <chrono>
+#include <unordered_map>
+using namespace std;
 
-class ann {
+namespace MZMTIN002 {
+    class ann {
+    private:
 
-};
+    public:
+        struct VectorHasher {   // Struct used for enabling using vector as umap key.
+            double operator()(const vector<double> &V) const {
+                double hash = 0.0;
+                for (int i : V) {
+                    hash += i;
+                }
+                return hash;
+            }
+        };
 
+        ann();  // Default constructor.
+
+        static double get_rand_weight();    // Get random initial weight.
+
+        static double perceptron(vector<vector<double>> inputs,
+                unordered_map<vector<double>, double, VectorHasher> target);  // Perceptron model that processes values.
+    };
+}
 
 #endif //ASSIGNMENT_7_ANN_H
