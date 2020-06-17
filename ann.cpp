@@ -82,5 +82,18 @@ double MZMTIN002::ann::neuron(vector<double> inputs, double target) {
     double w32 = -0.6;
     double bias1 = 0.1;
     double bias2 = -0.3;
+    double eta = 0.6;
+    int count = 0;
+    double linear_sum, n_output;
+
+
     return 0;
+}
+
+double MZMTIN002::ann::sigmoid(double x) {
+    return 1.0 / (1.0 + exp(-1 * x));
+}
+
+double MZMTIN002::ann::sigmoid_der(double x) {
+    return x * (1.0 - x);
 }

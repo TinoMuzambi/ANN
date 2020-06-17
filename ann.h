@@ -35,6 +35,9 @@ namespace MZMTIN002 {
         static double perceptron(vector<vector<double>> inputs,
                 unordered_map<vector<double>, double, VectorHasher> target);  // Perceptron model that processes values.
 
+        double sigmoid(double x);
+
+        double sigmoid_der(double x);
 
         static double neuron(vector<double> inputs, double target);  // Neuron model that processes values.
 
