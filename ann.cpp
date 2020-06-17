@@ -89,11 +89,3 @@ double MZMTIN002::ann::neuron(vector<double> inputs, double target) {
 
     return 0;
 }
-
-double MZMTIN002::ann::sigmoid(double x) {
-    return 1.0 / (1.0 + exp(-1 * x));
-}
-
-double MZMTIN002::ann::sigmoid_der(double x) {
-    return x * (1.0 - x);
-}
