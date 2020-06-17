@@ -8,11 +8,26 @@
 #include <random>
 #include <chrono>
 #include <unordered_map>
+#include "matrix.h"
+#include "layer.h"
+
 using namespace std;
 
 namespace MZMTIN002 {
     class ann {
     private:
+
+        // Part 2
+
+        int size;
+
+        vector<int> layout;
+
+        vector<layer *> layers;
+
+        vector<matrix *> weights;
+
+        vector<double> input;
 
     public:
 
@@ -35,14 +50,15 @@ namespace MZMTIN002 {
         static double perceptron(vector<vector<double>> inputs,
                 unordered_map<vector<double>, double, VectorHasher> target);  // Perceptron model that processes values.
 
+        // Part 2
+
+        ann(vector<int> layout, vector<double> init_weights);
+
         double sigmoid(double x);
 
         double sigmoid_der(double x);
 
-        static double neuron(vector<double> inputs, double target);  // Neuron model that processes values.
-
-        // Part 2
-
+        void set_input(vector<double> input);
 
     };
 }

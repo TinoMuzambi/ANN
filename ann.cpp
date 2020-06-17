@@ -7,6 +7,22 @@
  */
 MZMTIN002::ann::ann() = default;
 
+MZMTIN002::ann::ann(vector<int> layout, vector<double> init_weights) {
+    this->layout = layout;
+    size = layout.size();
+
+    for (int i = 0; i < size; ++i) {
+        layer* curr_layer = new layer(layout.at(i));
+        layers.push_back(curr_layer);
+    }
+
+    for (int i = 0; i < size - 1; ++i) {
+        matrix* curr_matrix = new matrix(layout.at(i), layout.at(i + 1), init_weights);
+
+        weights.push_back(curr_matrix);
+    }
+}
+
 /**
  * Gets a random double between 0 and 1 for initialising weights.
  * @return random double [0..1].
@@ -73,19 +89,12 @@ MZMTIN002::ann::perceptron(vector<vector<double>> inputs, unordered_map<vector<d
     }
 }
 
-double MZMTIN002::ann::neuron(vector<double> inputs, double target) {
-    double w11 = 0.1;
-    double w12 = -0.4;
-    double w21 = 0.2;
-    double w22 = 1.0;
-    double w31 = 0.5;
-    double w32 = -0.6;
-    double bias1 = 0.1;
-    double bias2 = -0.3;
-    double eta = 0.6;
-    int count = 0;
-    double linear_sum, n_output;
+void MZMTIN002::ann::set_input(vector<double> input) {
+    this->input = input;
 
+    for (int i = 0; i < input.size(); ++i) {
+        this->layers.at(0)->set_x(i, input.at(i));
+    }
 
-    return 0;
 }
+
