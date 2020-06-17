@@ -15,6 +15,9 @@ namespace MZMTIN002 {
     private:
 
     public:
+
+        // Part 1
+
         struct VectorHasher {   // Struct used for enabling using vector as umap key.
             double operator()(const vector<double> &V) const {
                 double hash = 0.0;
@@ -31,6 +34,13 @@ namespace MZMTIN002 {
 
         static double perceptron(vector<vector<double>> inputs,
                 unordered_map<vector<double>, double, VectorHasher> target);  // Perceptron model that processes values.
+
+
+        static double neuron(vector<double> inputs, double target);  // Neuron model that processes values.
+
+        // Part 2
+
+
     };
 }
 

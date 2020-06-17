@@ -5,9 +5,7 @@
 /**
  * Default constructor.
  */
-MZMTIN002::ann::ann() {
-    // Constructor tings.
-}
+MZMTIN002::ann::ann() = default;
 
 /**
  * Gets a random double between 0 and 1 for initialising weights.
@@ -73,4 +71,16 @@ MZMTIN002::ann::perceptron(vector<vector<double>> inputs, unordered_map<vector<d
             ans.clear();
         }
     }
+}
+
+double MZMTIN002::ann::neuron(vector<double> inputs, double target) {
+    double w11 = 0.1;
+    double w12 = -0.4;
+    double w21 = 0.2;
+    double w22 = 1.0;
+    double w31 = 0.5;
+    double w32 = -0.6;
+    double bias1 = 0.1;
+    double bias2 = -0.3;
+    return 0;
 }

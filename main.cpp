@@ -7,13 +7,12 @@
 
 using namespace std;
 
-
 int main() {
     MZMTIN002::ann ann;
 //    vector<vector<double>> inputs = {{0, 0},};
 //    vector<vector<double>> inputs = {{0, 1},};
 //    vector<vector<double>> inputs = {{1, 0},};
-    vector<vector<double>> inputs = {{1, 1},};
+    vector<vector<double>> inputs = {{1, 1}};
 
     // OR PERCEPTRON
     cout << "OR" << endl;
