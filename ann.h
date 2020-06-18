@@ -54,12 +54,21 @@ namespace MZMTIN002 {
 
         ann(vector<int> layout, vector<double> init_weights);
 
-        double sigmoid(double x);
-
-        double sigmoid_der(double x);
-
         void set_input(vector<double> input);
 
+        matrix* multiply_matrix(matrix* a, matrix* b);
+
+        matrix* get_neuron_matrix(int i);
+
+        matrix* get_derived_neuron_matrix(int i);
+
+        matrix* get_activated_neuron_matrix(int i);
+
+        matrix* get_weights(int i);
+
+        void feed_forward();
+
+        void set_neuron_x(int layer_index, int neuron_index, double x);
     };
 }
 

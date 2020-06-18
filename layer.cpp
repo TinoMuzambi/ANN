@@ -15,7 +15,7 @@ void MZMTIN002::layer::set_x(int i, double x) {
 }
 
 MZMTIN002::matrix *MZMTIN002::layer::matrixify_x() {
-    matrix* curr_matrix = new matrix(0, neurons.size());
+    matrix* curr_matrix = new matrix(1, neurons.size());
     for (int i = 0; i < neurons.size(); ++i) {
         curr_matrix->set_x(0, i, neurons.at(i)->get_x());
     }
@@ -24,7 +24,7 @@ MZMTIN002::matrix *MZMTIN002::layer::matrixify_x() {
 }
 
 MZMTIN002::matrix *MZMTIN002::layer::matrixify_x_active() {
-    matrix* curr_matrix = new matrix(0, neurons.size());
+    matrix* curr_matrix = new matrix(1, neurons.size());
     for (int i = 0; i < neurons.size(); ++i) {
         curr_matrix->set_x(0, i, neurons.at(i)->get_x_active());
     }
@@ -33,7 +33,7 @@ MZMTIN002::matrix *MZMTIN002::layer::matrixify_x_active() {
 }
 
 MZMTIN002::matrix *MZMTIN002::layer::matrixify_x_derived() {
-    matrix* curr_matrix = new matrix(0, neurons.size());
+    matrix* curr_matrix = new matrix(1, neurons.size());
     for (int i = 0; i < neurons.size(); ++i) {
         curr_matrix->set_x(0, i, neurons.at(i)->get_x_derived());
     }

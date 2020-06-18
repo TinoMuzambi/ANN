@@ -21,3 +21,15 @@ void MZMTIN002::neuron::set_x(double x) {
     sigmoid();
     sigmoid_der();
 }
+
+double MZMTIN002::neuron::get_x() {
+    return x;
+}
+
+double MZMTIN002::neuron::get_x_active() {
+    return x_active;
+}
+
+double MZMTIN002::neuron::get_x_derived() {
+    return x_derived;
+}

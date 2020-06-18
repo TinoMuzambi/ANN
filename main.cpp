@@ -40,5 +40,14 @@ int main() {
     vector<vector<double>> xor_inputs = {{nand_out, or_out}};
     ann.perceptron(xor_inputs, target);
 
+
+    // Part 2
+
+    vector<double> input = {1.30, 2.70, 0.80};
+    vector<int> layout = {3, 2, 1};
+    vector<double> weights = {0.1, -0.4, 0.2, 1.0, 0.5, -0.6};
+    MZMTIN002::ann* nn = new MZMTIN002::ann(layout, weights);
+    nn->feed_forward();
+
     return 0;
 }

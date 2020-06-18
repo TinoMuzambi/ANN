@@ -25,7 +25,7 @@ namespace MZMTIN002 {
 
         int get_rows();
 
-        int get_cols()
+        int get_cols();
     };
 }
 

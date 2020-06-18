@@ -98,3 +98,53 @@ void MZMTIN002::ann::set_input(vector<double> input) {
 
 }
 
+MZMTIN002::matrix *MZMTIN002::ann::multiply_matrix(MZMTIN002::matrix *a, MZMTIN002::matrix *b) {
+    matrix* result = new matrix(a->get_rows(), b->get_cols());
+    for (int i = 0; i < a->get_rows(); ++i) {
+        for (int j = 0; j < b->get_cols(); ++j) {
+            for (int k = 0; k < b->get_rows(); ++k) {
+                double curr = a->get_x(i, k) * b->get_x(k, j);
+                double next = result->get_x(i, j) + curr;
+                result->set_x(i, j, next);
+            }
+        }
+    }
+
+    return result;
+}
+
+MZMTIN002::matrix *MZMTIN002::ann::get_neuron_matrix(int i) {
+    return layers.at(i)->matrixify_x();
+}
+
+MZMTIN002::matrix *MZMTIN002::ann::get_derived_neuron_matrix(int i) {
+    return layers.at(i)->matrixify_x_derived();
+}
+
+MZMTIN002::matrix *MZMTIN002::ann::get_activated_neuron_matrix(int i) {
+    return layers.at(i)->matrixify_x_active();
+}
+
+MZMTIN002::matrix *MZMTIN002::ann::get_weights(int i) {
+    return weights.at(i);
+}
+
+void MZMTIN002::ann::set_neuron_x(int layer_index, int neuron_index, double x) {
+    layers.at(layer_index)->set_x(neuron_index, x);
+}
+
+void MZMTIN002::ann::feed_forward() {
+    for (int i = 0; i < layers.size() - 1; ++i) {
+        matrix* a = get_neuron_matrix(i);
+
+        if (i != 0)
+            a = get_activated_neuron_matrix(i);
+
+        matrix* b = get_weights(i);
+        matrix* c = multiply_matrix(a, b);
+
+        for (int j = 0; j < c->get_cols(); ++j) {
+            set_neuron_x(i + 1, j, c->get_x(0, j));
+        }
+    }
+}
