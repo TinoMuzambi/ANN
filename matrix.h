@@ -3,6 +3,7 @@
 #ifndef ASSIGNMENT_7_MATRIX_H
 #define ASSIGNMENT_7_MATRIX_H
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -26,6 +27,8 @@ namespace MZMTIN002 {
         int get_rows();
 
         int get_cols();
+
+        void print_output();
     };
 }
 

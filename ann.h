@@ -69,6 +69,8 @@ namespace MZMTIN002 {
         void feed_forward();
 
         void set_neuron_x(int layer_index, int neuron_index, double x);
+
+        void print_output();
     };
 }
 

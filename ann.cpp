@@ -148,3 +148,8 @@ void MZMTIN002::ann::feed_forward() {
         }
     }
 }
+
+void MZMTIN002::ann::print_output() {
+    matrix* curr = layers.at(layers.size() - 1)->matrixify_x_active();
+    curr->print_output();
+}

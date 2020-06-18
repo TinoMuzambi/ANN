@@ -56,3 +56,12 @@ MZMTIN002::matrix *MZMTIN002::matrix::transpose() {
     }
     return transposed_matrix;
 }
+
+void MZMTIN002::matrix::print_output() {
+    for(int i = 0; i < rows; ++i) {
+        for(int j = 0; j < cols; ++j) {
+            cout << matrix_vector.at(i).at(j) << "\t\t";
+        }
+        cout << endl;
+    }
+}
