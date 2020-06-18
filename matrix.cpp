@@ -1,6 +1,7 @@
 // MZMTIN002
 
 #include "matrix.h"
+#include "ann.h"
 
 MZMTIN002::matrix::matrix(int rows, int cols) {
     this->rows = rows;
@@ -15,14 +16,15 @@ MZMTIN002::matrix::matrix(int rows, int cols) {
     }
 }
 
-MZMTIN002::matrix::matrix(int rows, int cols, vector<double> init_weights) {
+MZMTIN002::matrix::matrix(int rows, int cols, vector<double> init_weights, bool first) {
     this->rows = rows;
     this->cols = cols;
 
     for (int i = 0; i < rows; ++i) {
         vector<double> col_values;
         for (int j = 0; j < cols; ++j) {
-            col_values.push_back(init_weights[i + j + 2 * i]);
+            double weight = first ? init_weights[j + (2 * i)] : MZMTIN002::ann::get_rand_weight(); // TODO fix.
+            col_values.push_back(weight);
         }
         matrix_vector.push_back(col_values);
     }

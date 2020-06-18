@@ -29,6 +29,8 @@ namespace MZMTIN002 {
 
         vector<double> input;
 
+        vector<double> bias;
+
     public:
 
         // Part 1
@@ -52,7 +54,7 @@ namespace MZMTIN002 {
 
         // Part 2
 
-        ann(vector<int> layout, vector<double> init_weights);
+        ann(vector<int> layout, vector<double> init_weights, vector<double> bias);
 
         void set_input(vector<double> input);
 

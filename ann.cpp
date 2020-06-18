@@ -7,17 +7,20 @@
  */
 MZMTIN002::ann::ann() = default;
 
-MZMTIN002::ann::ann(vector<int> layout, vector<double> init_weights) {
+MZMTIN002::ann::ann(vector<int> layout, vector<double> init_weights, vector<double> bias) {
     this->layout = layout;
-    size = layout.size();
+    this->bias = bias;
+    size = this->layout.size();
 
     for (int i = 0; i < size; ++i) {
-        layer* curr_layer = new layer(layout.at(i));
+        layer* curr_layer = new layer(this->layout.at(i));
         layers.push_back(curr_layer);
     }
 
     for (int i = 0; i < size - 1; ++i) {
-        matrix* curr_matrix = new matrix(layout.at(i), layout.at(i + 1), init_weights);
+        matrix* curr_matrix = new matrix(this->layout.at(i), this->layout.at(i + 1), init_weights, false);
+        if (i == 0)
+            curr_matrix = new matrix(this->layout.at(i), this->layout.at(i + 1), init_weights, true);
 
         weights.push_back(curr_matrix);
     }
@@ -104,7 +107,7 @@ MZMTIN002::matrix *MZMTIN002::ann::multiply_matrix(MZMTIN002::matrix *a, MZMTIN0
         for (int j = 0; j < b->get_cols(); ++j) {
             for (int k = 0; k < b->get_rows(); ++k) {
                 double curr = a->get_x(i, k) * b->get_x(k, j);
-                double next = result->get_x(i, j) + curr;
+                double next = result->get_x(i, j) + curr + bias.at(i);
                 result->set_x(i, j, next);
             }
         }
