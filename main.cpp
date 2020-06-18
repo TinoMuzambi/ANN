@@ -45,9 +45,11 @@ int main() {
 
     vector<double> input = {1.30, 2.70, 0.80};
     vector<int> layout = {3, 2, 1};
-    vector<double> weights = {0.1, -0.4, 0.2, 1.0, 0.5, -0.6};
-    vector<double> bias = {0.1, -0.3};
-    MZMTIN002::ann* nn = new MZMTIN002::ann(layout, weights, bias);
+    vector<double> initial_weights = {0.1, -0.4, 0.2, 1.0, 0.5, -0.6};
+    vector<double> hidden_weights = {0.8, 1.0};
+    vector<double> initial_bias = {0.1, -0.3};
+    double bias = -0.3;
+    MZMTIN002::ann* nn = new MZMTIN002::ann(layout, initial_weights, initial_bias, bias, hidden_weights);
     nn->set_input(input);
     nn->feed_forward();
     nn->print_output();

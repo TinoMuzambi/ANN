@@ -16,7 +16,7 @@ namespace MZMTIN002 {
     public:
         matrix(int rows, int cols);
 
-        matrix(int rows, int cols, vector<double> init_weights, bool first);
+        matrix(int rows, int cols, vector<double> init_weights, bool first, vector<double> weights);
 
         matrix* transpose();
 

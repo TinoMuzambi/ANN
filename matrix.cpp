@@ -16,20 +16,19 @@ MZMTIN002::matrix::matrix(int rows, int cols) {
     }
 }
 
-MZMTIN002::matrix::matrix(int rows, int cols, vector<double> init_weights, bool first) {
+MZMTIN002::matrix::matrix(int rows, int cols, vector<double> init_weights, bool first, vector<double> weights) {
     this->rows = rows;
     this->cols = cols;
 
     for (int i = 0; i < rows; ++i) {
         vector<double> col_values;
         for (int j = 0; j < cols; ++j) {
-            double weight = first ? init_weights[j + (2 * i)] : MZMTIN002::ann::get_rand_weight(); // TODO fix.
+            double weight = first ? init_weights[j + (2 * i)] : weights[j + i];
             col_values.push_back(weight);
         }
         matrix_vector.push_back(col_values);
     }
 }
-
 
 int MZMTIN002::matrix::get_rows() {
     return rows;
@@ -38,7 +37,6 @@ int MZMTIN002::matrix::get_rows() {
 int MZMTIN002::matrix::get_cols() {
     return cols;
 }
-
 
 void MZMTIN002::matrix::set_x(int row, int col, double x) {
     this->matrix_vector.at(row).at(col) = x;
