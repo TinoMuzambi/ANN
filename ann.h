@@ -65,7 +65,7 @@ namespace MZMTIN002 {
 
         void set_input(vector<double> input);
 
-        matrix* multiply_matrix(matrix* a, matrix* b);
+        matrix *multiply_matrix(matrix *a, matrix *b, bool first);
 
         matrix* get_neuron_matrix(int i);
 

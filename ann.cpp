@@ -106,13 +106,15 @@ void MZMTIN002::ann::set_input(vector<double> input) {
 
 }
 
-MZMTIN002::matrix *MZMTIN002::ann::multiply_matrix(MZMTIN002::matrix *a, MZMTIN002::matrix *b) {
+MZMTIN002::matrix *MZMTIN002::ann::multiply_matrix(matrix *a, matrix *b, bool first) {
     matrix* result = new matrix(a->get_rows(), b->get_cols());
     for (int i = 0; i < a->get_rows(); ++i) {
         for (int j = 0; j < b->get_cols(); ++j) {
             for (int k = 0; k < b->get_rows(); ++k) {
                 double curr = a->get_x(i, k) * b->get_x(k, j);
-                double next = result->get_x(i, j) + curr + initial_bias.at(i);
+                double next = result->get_x(i, j) + curr;
+                if (k == b->get_rows() - 1)
+                    next += first ? initial_bias.at(i + j) : bias;
                 result->set_x(i, j, next);
             }
         }
@@ -149,7 +151,10 @@ void MZMTIN002::ann::feed_forward() {
             a = get_activated_neuron_matrix(i);
 
         matrix* b = get_weights(i);
-        matrix* c = multiply_matrix(a, b);
+        matrix* c = multiply_matrix(a, b, true);
+
+        if (i != 0)
+            c = multiply_matrix(a, b, false);
 
         for (int j = 0; j < c->get_cols(); ++j) {
             set_neuron_x(i + 1, j, c->get_x(0, j));
