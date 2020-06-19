@@ -58,9 +58,9 @@ MZMTIN002::matrix *MZMTIN002::matrix::transpose() {
 }
 
 void MZMTIN002::matrix::print_output() {
-    for(int i = 0; i < rows; ++i) {
-        for(int j = 0; j < cols; ++j) {
-            cout << matrix_vector.at(i).at(j) << "\t\t";
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            cout << j + 1 << ": " << matrix_vector.at(i).at(j) << endl;
         }
         cout << endl;
     }

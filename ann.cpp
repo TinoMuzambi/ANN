@@ -163,6 +163,12 @@ void MZMTIN002::ann::feed_forward() {
 }
 
 void MZMTIN002::ann::print_output() {
-    matrix* curr = layers.at(layers.size() - 1)->matrixify_x_active();
-    curr->print_output();
+    for (int i = 0; i < this->layers.size(); ++i) {
+        cout << "Layer " << i << endl;
+        if (i == 0)
+            this->layers.at(i)->matrixify_x()->print_output();
+        else
+            this->layers.at(i)->matrixify_x_active()->print_output();
+
+    }
 }
