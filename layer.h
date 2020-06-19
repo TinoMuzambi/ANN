@@ -19,13 +19,10 @@ namespace MZMTIN002 {
 
         void set_x(int i, double x);
 
-        matrix* matrixify_x();
+        matrix* get_x_matrix();
 
-        matrix* matrixify_x_active();
-
-        matrix* matrixify_x_derived();
+        matrix* getX_active_matrix();
     };
 }
-
 
 #endif //ASSIGNMENT_7_LAYER_H

@@ -1,7 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <random>
-#include <chrono>
 #include <unordered_map>
 #include "ann.h"
 

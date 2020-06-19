@@ -27,15 +27,9 @@ namespace MZMTIN002 {
 
         vector<matrix *> weights;
 
-        vector<double> input;
+        vector<double> input, initial_bias, initial_weights, hidden_weights;
 
-        vector<double> initial_bias;
-
-        double bias;
-
-        vector<double> initial_weights;
-
-        vector<double> hidden_weights;
+        double hidden_bias;
 
     public:
 
@@ -60,16 +54,14 @@ namespace MZMTIN002 {
 
         // Part 2
 
-        ann(vector<int> layout, vector<double> init_weights, vector<double> initial_bias, double bias,
+        ann(vector<int> layout, vector<double> init_weights, vector<double> initial_bias, double hidden_bias,
             vector<double> hidden_weights);
 
         void set_input(vector<double> input);
 
-        matrix *multiply_matrix(matrix *a, matrix *b, bool first);
+        matrix* multiply_matrix(matrix *a, matrix *b, bool first);
 
         matrix* get_neuron_matrix(int i);
-
-        matrix* get_derived_neuron_matrix(int i);
 
         matrix* get_activated_neuron_matrix(int i);
 

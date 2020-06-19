@@ -1,7 +1,6 @@
 // MZMTIN002
 
 #include "matrix.h"
-#include "ann.h"
 
 MZMTIN002::matrix::matrix(int rows, int cols) {
     this->rows = rows;
@@ -44,17 +43,6 @@ void MZMTIN002::matrix::set_x(int row, int col, double x) {
 
 double MZMTIN002::matrix::get_x(int row, int col) {
     return this->matrix_vector.at(row).at(col);
-}
-
-MZMTIN002::matrix *MZMTIN002::matrix::transpose() {
-    matrix* transposed_matrix = new matrix(cols, rows);
-
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            transposed_matrix->set_x(j, i, get_x(i, j));
-        }
-    }
-    return transposed_matrix;
 }
 
 void MZMTIN002::matrix::print_output() {

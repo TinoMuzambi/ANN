@@ -18,8 +18,6 @@ namespace MZMTIN002 {
 
         matrix(int rows, int cols, vector<double> init_weights, bool first, vector<double> weights);
 
-        matrix* transpose();
-
         void set_x(int row, int col, double x);
 
         double get_x(int row, int col);
@@ -31,6 +29,5 @@ namespace MZMTIN002 {
         void print_output();
     };
 }
-
 
 #endif //ASSIGNMENT_7_MATRIX_H

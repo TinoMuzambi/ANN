@@ -7,11 +7,11 @@
  */
 MZMTIN002::ann::ann() = default;
 
-MZMTIN002::ann::ann(vector<int> layout, vector<double> init_weights, vector<double> initial_bias, double bias,
+MZMTIN002::ann::ann(vector<int> layout, vector<double> init_weights, vector<double> initial_bias, double hidden_bias,
                     vector<double> hidden_weights) {
     this->layout = layout;
     this->initial_bias = initial_bias;
-    this->bias = bias;
+    this->hidden_bias = hidden_bias;
     this->initial_weights = init_weights;
     this->hidden_weights = hidden_weights;
     size = this->layout.size();
@@ -100,8 +100,8 @@ MZMTIN002::ann::perceptron(vector<vector<double>> inputs, unordered_map<vector<d
 void MZMTIN002::ann::set_input(vector<double> input) {
     this->input = input;
 
-    for (int i = 0; i < input.size(); ++i) {
-        this->layers.at(0)->set_x(i, input.at(i));
+    for (int i = 0; i < this->input.size(); ++i) {
+        this->layers.at(0)->set_x(i, this->input.at(i));
     }
 
 }
@@ -114,7 +114,7 @@ MZMTIN002::matrix *MZMTIN002::ann::multiply_matrix(matrix *a, matrix *b, bool fi
                 double curr = a->get_x(i, k) * b->get_x(k, j);
                 double next = result->get_x(i, j) + curr;
                 if (k == b->get_rows() - 1)
-                    next += first ? initial_bias.at(i + j) : bias;
+                    next += first ? initial_bias.at(i + j) : hidden_bias;
                 result->set_x(i, j, next);
             }
         }
@@ -124,15 +124,11 @@ MZMTIN002::matrix *MZMTIN002::ann::multiply_matrix(matrix *a, matrix *b, bool fi
 }
 
 MZMTIN002::matrix *MZMTIN002::ann::get_neuron_matrix(int i) {
-    return layers.at(i)->matrixify_x();
-}
-
-MZMTIN002::matrix *MZMTIN002::ann::get_derived_neuron_matrix(int i) {
-    return layers.at(i)->matrixify_x_derived();
+    return layers.at(i)->get_x_matrix();
 }
 
 MZMTIN002::matrix *MZMTIN002::ann::get_activated_neuron_matrix(int i) {
-    return layers.at(i)->matrixify_x_active();
+    return layers.at(i)->getX_active_matrix();
 }
 
 MZMTIN002::matrix *MZMTIN002::ann::get_weights(int i) {
@@ -166,14 +162,14 @@ void MZMTIN002::ann::print_output() {
     for (int i = 0; i < this->layers.size(); ++i) {
         cout << "Layer " << i << endl;
         if (i == 0)
-            this->layers.at(i)->matrixify_x()->print_output();
+            this->layers.at(i)->get_x_matrix()->print_output();
         else
-            this->layers.at(i)->matrixify_x_active()->print_output();
+            this->layers.at(i)->getX_active_matrix()->print_output();
 
     }
 }
 
 double MZMTIN002::ann::compute_error(double target) {
-    double actual = this->layers.at(this->layers.size() - 1)->matrixify_x_active()->get_x(0, 0);
+    double actual = this->layers.at(this->layers.size() - 1)->getX_active_matrix()->get_x(0, 0);
     return pow((target - actual), 2);
 }
