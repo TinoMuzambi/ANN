@@ -172,3 +172,8 @@ void MZMTIN002::ann::print_output() {
 
     }
 }
+
+double MZMTIN002::ann::compute_error(double target) {
+    double actual = this->layers.at(this->layers.size() - 1)->matrixify_x_active()->get_x(0, 0);
+    return pow((target - actual), 2);
+}

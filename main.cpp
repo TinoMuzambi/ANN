@@ -54,5 +54,8 @@ int main() {
     nn->feed_forward();
     nn->print_output();
 
+    double error = nn->compute_error(0.36);
+    cout << "MSE - " << error << endl;
+
     return 0;
 }
