@@ -48,8 +48,9 @@ double MZMTIN002::ann::get_rand_weight() {
  * @param target outputs for given inputs.
  * @return output for given input.
  */
-double
-MZMTIN002::ann::perceptron(vector<vector<double>> inputs, unordered_map<vector<double>, double, VectorHasher> target) {
+vector<double>
+MZMTIN002::ann::perceptron(vector<vector<double>> inputs, unordered_map<vector<double>, double, VectorHasher> target,
+                           bool console) {
     double eta = 0.6;   // Learning rate.
     double w1 = get_rand_weight();   // Initialising weights randomly.
     double w2 = get_rand_weight();
@@ -59,7 +60,7 @@ MZMTIN002::ann::perceptron(vector<vector<double>> inputs, unordered_map<vector<d
     double delta_w1, delta_w2, delta_bias;
 
     while (true) {
-        vector<int> ans;
+        vector<double> ans;
         for (auto & input : inputs) {
             linear_sum = input[0] * w1 + input[1] * w2 + bias;
             if (linear_sum >= 0) { // Threshold activation function.
@@ -85,10 +86,13 @@ MZMTIN002::ann::perceptron(vector<vector<double>> inputs, unordered_map<vector<d
             bias += delta_bias;
         }
         if (count == inputs.size()) {
-            for (auto &&an : ans) {
-                cout << an << endl;
+            if (console) {
+                vector<string> temp = {"0 0", "0 1", "1 0", "1 1"};
+                for (int i = 0; i < ans.size(); ++i) {
+                    cout << temp[i] << " - " << ans[i] << endl;
+                }
             }
-            return ans[0];
+            return ans;
         }
         else {
             count = 0;

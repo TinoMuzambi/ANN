@@ -49,8 +49,9 @@ namespace MZMTIN002 {
 
         static double get_rand_weight();    // Get random initial weight.
 
-        static double perceptron(vector<vector<double>> inputs,
-                unordered_map<vector<double>, double, VectorHasher> target);  // Perceptron model that processes values.
+        static vector<double>
+        perceptron(vector<vector<double>> inputs, unordered_map<vector<double>, double, VectorHasher> target,
+                   bool console);  // Perceptron model that processes values.
 
         // Part 2
 

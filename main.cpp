@@ -6,28 +6,27 @@
 using namespace std;
 
 int main() {
+    cout << "PART 1" << endl;
     MZMTIN002::ann ann;
 //    vector<vector<double>> inputs = {{0, 0},};
 //    vector<vector<double>> inputs = {{0, 1},};
 //    vector<vector<double>> inputs = {{1, 0},};
-    vector<vector<double>> inputs = {{1, 1}};
+    vector<vector<double>> inputs = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
 
     // OR PERCEPTRON
-    cout << "OR" << endl;
     unordered_map<vector<double>, double, MZMTIN002::ann::VectorHasher> target;
     target[{0, 0}] = 0;
     target[{0, 1}] = 1;
     target[{1, 0}] = 1;
     target[{1, 1}] = 1;
-    double or_out = ann.perceptron(inputs, target);
+    vector<double> or_out = ann.perceptron(inputs, target, false);
 
     // NAND PERCEPTRON
-    cout << "NAND" << endl;
     target[{0, 0}] = 1;
     target[{0, 1}] = 1;
     target[{1, 0}] = 1;
     target[{1, 1}] = 0;
-    double nand_out = ann.perceptron(inputs, target);
+    vector<double> nand_out = ann.perceptron(inputs, target, false);
 
     // AND PERCEPTRON
     cout << "XOR" << endl;
@@ -35,12 +34,16 @@ int main() {
     target[{0, 1}] = 0;
     target[{1, 0}] = 0;
     target[{1, 1}] = 1;
-    vector<vector<double>> xor_inputs = {{nand_out, or_out}};
-    ann.perceptron(xor_inputs, target);
+    vector<vector<double>> xor_inputs;
+    for (int i = 0; i < or_out.size(); ++i) {
+        xor_inputs.push_back({nand_out[i], or_out[i]});
+    }
+    ann.perceptron(xor_inputs, target, true);
 
 
     // Part 2
 
+    cout << "\nPART 2" << endl;
     vector<double> input = {1.30, 2.70, 0.80};
     vector<int> layout = {3, 2, 1};
     vector<double> initial_weights = {0.1, -0.4, 0.2, 1.0, 0.5, -0.6};
