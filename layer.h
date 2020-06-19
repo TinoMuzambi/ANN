@@ -11,17 +11,17 @@ using namespace std;
 namespace MZMTIN002 {
     class layer {
     private:
-        int size;
+        int size;   // Number of neurons in this layer.
 
-        vector<neuron *> neurons;
+        vector<neuron *> neurons;   // Neurons in this layer.
     public:
-        layer(int size);
+        layer(int size);    // Default constructor.
 
-        void set_x(int i, double x);
+        void set_x(int i, double x);    // Update the value of the neuron at index i.
 
-        matrix* get_x_matrix();
+        matrix* get_x_matrix();     // Get matrix version of layer.
 
-        matrix* getX_active_matrix();
+        matrix* getX_active_matrix();   // Get matrix version of activated layer.
     };
 }
 

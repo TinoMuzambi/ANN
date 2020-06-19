@@ -7,30 +7,6 @@
  */
 MZMTIN002::ann::ann() = default;
 
-MZMTIN002::ann::ann(vector<int> layout, vector<double> init_weights, vector<double> initial_bias, double hidden_bias,
-                    vector<double> hidden_weights) {
-    this->layout = layout;
-    this->initial_bias = initial_bias;
-    this->hidden_bias = hidden_bias;
-    this->initial_weights = init_weights;
-    this->hidden_weights = hidden_weights;
-    size = this->layout.size();
-
-    for (int i = 0; i < size; ++i) {
-        layer* curr_layer = new layer(this->layout.at(i));
-        layers.push_back(curr_layer);
-    }
-
-    for (int i = 0; i < size - 1; ++i) {
-        matrix* curr_matrix = new matrix(this->layout.at(i), this->layout.at(i + 1), this->initial_weights, false,
-                                         this->hidden_weights);
-        if (i == 0)
-            curr_matrix = new matrix(this->layout.at(i), this->layout.at(i + 1), this->initial_weights, true, this->hidden_weights);
-
-        weights.push_back(curr_matrix);
-    }
-}
-
 /**
  * Gets a random double between 0 and 1 for initialising weights.
  * @return random double [0..1].
@@ -63,12 +39,10 @@ MZMTIN002::ann::perceptron(vector<vector<double>> inputs, unordered_map<vector<d
         vector<double> ans;
         for (auto & input : inputs) {
             linear_sum = input[0] * w1 + input[1] * w2 + bias;
-            if (linear_sum >= 0) { // Threshold activation function.
+            if (linear_sum >= 0)  // Threshold activation function.
                 p_output = 1.0;
-            }
-            else {
+            else
                 p_output = 0.0;
-            }
             if (target[input] == p_output) {    // Check if output is equivalent to target.
                 count++;
                 delta_w1 = 0.0;
@@ -101,6 +75,42 @@ MZMTIN002::ann::perceptron(vector<vector<double>> inputs, unordered_map<vector<d
     }
 }
 
+/**
+ * Constructor - sets values and initialises network with layers and respective weights.
+ * @param layout the layout of the network.
+ * @param init_weights weights for input layers
+ * @param hidden_weights weights for hidden layers.
+ * @param initial_bias bias values for input layers.
+ * @param hidden_bias bias values for hidden layers.
+ */
+MZMTIN002::ann::ann(vector<int> layout, vector<double> init_weights, vector<double> hidden_weights, double hidden_bias,
+                    vector<double> initial_bias) {
+    this->layout = layout;
+    this->initial_bias = initial_bias;
+    this->hidden_bias = hidden_bias;
+    this->initial_weights = init_weights;
+    this->hidden_weights = hidden_weights;
+    size = this->layout.size();
+
+    for (int i = 0; i < size; ++i) {    // Initialising layers.
+        layer* curr_layer = new layer(this->layout.at(i));
+        layers.push_back(curr_layer);
+    }
+
+    for (int i = 0; i < size - 1; ++i) {    // Intialising weights.
+        matrix* curr_matrix = new matrix(this->layout.at(i), this->layout.at(i + 1), this->initial_weights, false,
+                                         this->hidden_weights);
+        if (i == 0)
+            curr_matrix = new matrix(this->layout.at(i), this->layout.at(i + 1), this->initial_weights, true, this->hidden_weights);
+
+        weights.push_back(curr_matrix);
+    }
+}
+
+/**
+ * Set input for the input layers.
+ * @param input vector of input.
+ */
 void MZMTIN002::ann::set_input(vector<double> input) {
     this->input = input;
 
@@ -110,7 +120,14 @@ void MZMTIN002::ann::set_input(vector<double> input) {
 
 }
 
-MZMTIN002::matrix *MZMTIN002::ann::multiply_matrix(matrix *a, matrix *b, bool first) {
+/**
+ * Performs matrix multiplication and also adds respective bias values.
+ * @param a first matrix.
+ * @param b second matrix.
+ * @param first used to determine which bias values to add.
+ * @return result of a * b + bias.
+ */
+MZMTIN002::matrix *MZMTIN002::ann::multiply_matrices(matrix *a, matrix *b, bool first) {
     matrix* result = new matrix(a->get_rows(), b->get_cols());
     for (int i = 0; i < a->get_rows(); ++i) {
         for (int j = 0; j < b->get_cols(); ++j) {
@@ -127,22 +144,46 @@ MZMTIN002::matrix *MZMTIN002::ann::multiply_matrix(matrix *a, matrix *b, bool fi
     return result;
 }
 
+/**
+ * Get matrix at index i.
+ * @param i index of the matrix.
+ * @return matrix i.
+ */
 MZMTIN002::matrix *MZMTIN002::ann::get_neuron_matrix(int i) {
     return layers.at(i)->get_x_matrix();
 }
 
+/**
+ * Get activated matrix at index i.
+ * @param i index of the activated matrix.
+ * @return activated matrix i.
+ */
 MZMTIN002::matrix *MZMTIN002::ann::get_activated_neuron_matrix(int i) {
     return layers.at(i)->getX_active_matrix();
 }
 
+/**
+ * Get weights at index i.
+ * @param i index of the weights.
+ * @return matrix of weights.
+ */
 MZMTIN002::matrix *MZMTIN002::ann::get_weights(int i) {
     return weights.at(i);
 }
 
+/**
+ * Set x value of neuron with neuron_index in layer layer_index.
+ * @param layer_index index of layer neuron is in.
+ * @param neuron_index index of the neuron to be set.
+ * @param x the value to set.
+ */
 void MZMTIN002::ann::set_neuron_x(int layer_index, int neuron_index, double x) {
     layers.at(layer_index)->set_x(neuron_index, x);
 }
 
+/**
+ * Performs feed forward method on the network to get one iteration of propagation.
+ */
 void MZMTIN002::ann::feed_forward() {
     for (int i = 0; i < layers.size() - 1; ++i) {
         matrix* a = get_neuron_matrix(i);
@@ -151,10 +192,10 @@ void MZMTIN002::ann::feed_forward() {
             a = get_activated_neuron_matrix(i);
 
         matrix* b = get_weights(i);
-        matrix* c = multiply_matrix(a, b, true);
+        matrix* c = multiply_matrices(a, b, true);
 
         if (i != 0)
-            c = multiply_matrix(a, b, false);
+            c = multiply_matrices(a, b, false);
 
         for (int j = 0; j < c->get_cols(); ++j) {
             set_neuron_x(i + 1, j, c->get_x(0, j));
@@ -162,6 +203,9 @@ void MZMTIN002::ann::feed_forward() {
     }
 }
 
+/**
+ * Prints network to console.
+ */
 void MZMTIN002::ann::print_output() {
     for (int i = 0; i < this->layers.size(); ++i) {
         cout << "Layer " << i << endl;
@@ -173,6 +217,11 @@ void MZMTIN002::ann::print_output() {
     }
 }
 
+/**
+ * Computes the MSE.
+ * @param target target output for the network.
+ * @return the MSE.
+ */
 double MZMTIN002::ann::compute_error(double target) {
     double actual = this->layers.at(this->layers.size() - 1)->getX_active_matrix()->get_x(0, 0);
     return pow((target - actual), 2);

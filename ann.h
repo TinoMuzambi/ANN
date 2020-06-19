@@ -21,11 +21,11 @@ namespace MZMTIN002 {
 
         int size;
 
-        vector<int> layout;
+        vector<int> layout;     // Layout of this network.
 
-        vector<layer *> layers;
+        vector<layer *> layers;     // Layers in this network.
 
-        vector<matrix *> weights;
+        vector<matrix *> weights;   // Weights for each layer.
 
         vector<double> input, initial_bias, initial_weights, hidden_weights;
 
@@ -55,26 +55,26 @@ namespace MZMTIN002 {
 
         // Part 2
 
-        ann(vector<int> layout, vector<double> init_weights, vector<double> initial_bias, double hidden_bias,
-            vector<double> hidden_weights);
+        ann(vector<int> layout, vector<double> init_weights, vector<double> hidden_weights, double hidden_bias,
+            vector<double> initial_bias);     // Constructor - sets and intialises values.
 
-        void set_input(vector<double> input);
+        void set_input(vector<double> input);   // Set input for network.
 
-        matrix* multiply_matrix(matrix *a, matrix *b, bool first);
+        matrix* multiply_matrices(matrix *a, matrix *b, bool first);    // Performs matrix multiplication.
 
-        matrix* get_neuron_matrix(int i);
+        matrix* get_neuron_matrix(int i);   // Get matrix at index i.
 
-        matrix* get_activated_neuron_matrix(int i);
+        matrix* get_activated_neuron_matrix(int i);     // Get activated matric at index i.
 
-        matrix* get_weights(int i);
+        matrix* get_weights(int i);     // Get weights at index i.
 
-        void feed_forward();
+        void feed_forward();    // Perform feed forward through network.
 
-        void set_neuron_x(int layer_index, int neuron_index, double x);
+        void set_neuron_x(int layer_index, int neuron_index, double x);     // Set x value of neuron with neuron_index in layer layer_index.
 
-        void print_output();
+        void print_output();    // Print out this network to the console.
 
-        double compute_error(double target);
+        double compute_error(double target);    // Compute and return MSE.
     };
 }
 

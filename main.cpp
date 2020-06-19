@@ -8,9 +8,6 @@ using namespace std;
 int main() {
     cout << "PART 1" << endl;
     MZMTIN002::ann ann;
-//    vector<vector<double>> inputs = {{0, 0},};
-//    vector<vector<double>> inputs = {{0, 1},};
-//    vector<vector<double>> inputs = {{1, 0},};
     vector<vector<double>> inputs = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
 
     // OR PERCEPTRON
@@ -35,11 +32,9 @@ int main() {
     target[{1, 0}] = 0;
     target[{1, 1}] = 1;
     vector<vector<double>> xor_inputs;
-    for (int i = 0; i < or_out.size(); ++i) {
+    for (int i = 0; i < or_out.size(); ++i)
         xor_inputs.push_back({nand_out[i], or_out[i]});
-    }
     ann.perceptron(xor_inputs, target, true);
-
 
     // Part 2
 
@@ -50,7 +45,7 @@ int main() {
     vector<double> hidden_weights = {0.8, 1.0};
     vector<double> initial_bias = {0.1, -0.3};
     double bias = -0.3;
-    MZMTIN002::ann* nn = new MZMTIN002::ann(layout, initial_weights, initial_bias, bias, hidden_weights);
+    MZMTIN002::ann* nn = new MZMTIN002::ann(layout, initial_weights, hidden_weights, bias, initial_bias);
     nn->set_input(input);
     nn->feed_forward();
     nn->print_output();
